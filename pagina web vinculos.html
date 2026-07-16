@@ -1,0 +1,523 @@
+<!--autor: jose camilo yol arreaga-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="author" content="Jose camilo yol arreaga"> <!-- Mi nombre para buscadores -->
+  <title>Vínculos que pueden ayudar</title>
+
+  <style>
+    /* ==========================================
+       CONTENEDOR RESPONSIVO (MOBILE-FIRST)
+       ========================================== */
+    .contenedor-tarjetas {
+      display: grid;
+      /* Por defecto en celulares: 1 sola columna que ocupa todo el ancho */
+      grid-template-columns: 1fr; 
+      gap: 20px; 
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1400px; /* Evita que en monitores gigantes se estire infinitamente */
+      margin: 0 auto; /* Centra el contenedor en la pantalla */
+    }
+
+    /* ==========================================
+       MEDIA QUERIES (PANTALLAS MÁS GRANDES)
+       ========================================== */
+    
+    /* Tabletas y pantallas medianas (mínimo 600px de ancho) */
+    @media (min-width: 600px) {
+      .contenedor-tarjetas {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+      }
+    }
+
+    /* Computadoras portátiles y monitores pequeños (mínimo 900px de ancho) */
+    @media (min-width: 900px) {
+      .contenedor-tarjetas {
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+      }
+    }
+
+    /* Monitores grandes de escritorio (mínimo 1200px de ancho) */
+    @media (min-width: 1200px) {
+      .contenedor-tarjetas {
+        grid-template-columns: repeat(6, 1fr); /* Regresa a las 6 columnas originales */
+      }
+    }
+
+    /* ==========================================
+       ESTILOS DE LAS TARJETAS (EFECTO 3D)
+       ========================================== */
+    .tarjeta-3d {
+      background-color: transparent;
+      height: 250px; /* Altura fija para que el diseño 3D no se deforme */
+      height: 180;
+      perspective: 1000px; 
+    }
+
+    .tarjeta-interior {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    .tarjeta-3d:hover .tarjeta-interior {
+      transform: rotateY(180deg);
+    }
+
+    .cara-frontal, .cara-trasera {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden; 
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 20px;
+    }
+
+    /* Cara Frontal (Azul) */
+    .cara-frontal {
+      background-color: #5fb1a2; 
+      color: white;
+      border: 2px solid #000000; /* Agrega esta línea: 2px de grosor, sólida y negra */
+    }
+
+    .cara-frontal h3 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+    }
+
+    .cara-frontal img {
+      width: 50px;
+      height: 50px;
+    }
+
+    /* Cara Trasera (Amarilla) */
+    .cara-trasera {
+      background-color: #f1c40f; 
+      color: #2c3e50;
+      transform: rotateY(180deg); 
+      text-decoration: none; 
+      border: 2px solid #000000; /* Agrega esta línea: 2px de grosor, sólida y negra */
+    }
+
+    .cara-trasera h4 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .cara-trasera ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 15px 0;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .cara-trasera ul li {
+      margin-bottom: 5px;
+    }
+
+    .boton-enlace {
+      background-color: #2c3e50;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+
+    .resaltar {
+    background-color: #f7e018; /* Color amarillo de fondo */
+    color: #000000;            /* Color del texto (negro) */
+    font-weight: bold;         /* Opcional: hace la palabra negrita */
+    padding: 2px 4px;          /* Opcional: le da un poco de espacio alrededor */
+    border-radius: 3px;        /* Opcional: redondea las esquinas del resaltado */
+}
+  
+  .titulo-principal {
+    text-align: center;        /* Centra el texto en la pantalla */
+    color: #2b6cb0;            /* Cambia el color (en este caso, un azul elegante) */
+    font-size: 32px;           /* Hace la letra más grande (puedes ajustar el número a tu gusto) */
+    font-family: sans-serif;   /* Opcional: una tipografía más limpia si no tienes una definida */
+    margin-top: 20px;          /* Opcional: añade un poco de espacio arriba del título */
+}
+  
+body {
+    background-color: #f0f4f8; /* Un color gris/azul claro y suave */
+}
+  
+
+/* Contenedor de pantalla completa que oscurece el fondo */
+.banner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999; /* Para asegurarnos de que quede por encima de todo */
+}
+
+/* Tarjeta del mensaje */
+.banner-content {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: popIn 0.3s ease-out; /* Animación de entrada suave */
+}
+
+/* Título */
+.banner-content h2 {
+  color: #222;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Párrafo */
+.banner-content p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Botón de acción */
+.banner-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 35px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px; /* Botón redondeado moderno */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.banner-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Ligero efecto de aumento */
+}
+
+/* Clase que controla si se muestra o se oculta */
+.hidden {
+  display: none !important;
+}
+
+/* Animación de entrada */
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+  </style>
+</head>
+<body>
+
+<!-- esto es para un mensaje la primera  vez que ingrese-->
+
+  <div id="welcome-banner" class="banner-overlay hidden">
+  <div class="banner-content">
+    <h2>¡Qué gusto verte por aquí! 🎉</h2>
+    <p>Te doy la bienvenida a este sitio web. Quiero ofrecerte la mejor experiencia posible, y si tienes una idea para mejorarlo me avisas.</p>
+    <button id="close-banner-btn" class="banner-btn">¡Entrar!</button>
+  </div>
+</div>
+
+
+  <header>
+  <h1 class="titulo-principal">Click en el vínculo que pueda servirle</h1>
+  </header>
+
+  <!-- aqui empiezan las tarjetas-->
+
+    <div class="contenedor-tarjetas">
+    
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3>Sistema integrado de Gestión <span class="resaltar">SIGES</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://siges.minfin.gob.gt/sigesweb/login/frmlogin.aspx" target="_blank" class="cara-trasera">
+          <h4>Este sistema es para: </h4>
+          <ul>
+            <li>📄 Consolidar solicitudes de pedido</li>
+            <li>✅ Adjudicar sp y pagar</li>
+          </ul>
+          <span class="boton-enlace">Ingresar Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Manual de Clasificación</span> presupuestaria 7a Edición</h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://www.minfin.gob.gt/wp-content/uploads/downloads/leyes_manuales/manuales_dtp/Manual_Clasificaciones_Presupuestarias_7Edicion.pdf" target="_blank" class="cara-trasera">
+          <h4>Este manual contiene:</h4>
+          <ul>
+            <li>✅ Número de renglones, nombres y fuentes de financimiento que se usan en  el Estado</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Manual ➔</span>
+        </a>
+      </div>
+    </div>
+    
+    
+    
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3>Sistema de Información de Contrataciones y Adquisiciones del Estado <span class="resaltar">GUATECOMPRAS</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://www.guatecompras.gt/priv/sistema/login.aspx" target="_blank" class="cara-trasera">
+          <h4>Este sistema es para: </h4>
+          <ul>
+            <li>📄 Publicar eventos:</li>
+            <li>✅ Compora directa, licitación y cotización</li>
+          </ul>
+          <span class="boton-enlace">Ingresar Portal ➔</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar"> Manual de Compras</span>de la DGCA del MDN 2026</h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://dip.mindef.mil.gt/docs/Articulo10/Numeral%206/manual_dgca.pdf" target="_blank" class="cara-trasera">
+          <h4>Este Manual contiene: </h4>
+          <ul>
+            <li>📄 Los lineamientos del MDN:</li>
+            <li>✅ para realizar las diferentes adquisicones de conformidad a los Régimenes y modalidads de compra</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Manual ➔</span>
+        </a>
+      </div>
+    </div>
+
+<div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3>Normas de uso de Guatecompras <span class="resaltar">Resolución No. 001-2022 </span></h3>
+          <!--<img src="icono1.svg" alt="Icono"-->
+        </div>
+        <a href="https://www.guatecompras.gt/servicios/files/Resolucion%20Numero%20001-2022.pdf" target="_blank" class="cara-trasera">
+          <h4>Estas normas son para: </h4>
+          <ul>
+            <li>📄 El uso del sistema GUATECOMPRAS</li>
+            <li>✅ Los procedimientos y plazos en cada una de las formas de adquisición</li>
+          </ul>
+          <span class="boton-enlace">Visualizar la Normativa ➔</span>
+        </a>
+      </div>
+    </div>
+   
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3>Tendrá <span class="resaltar">Agencia virtual</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://portal.sat.gob.gt/portal/consulta-cui-nit/" target="_blank" class="cara-trasera">
+          <h4>Este manual contiene:</h4>
+          <ul>
+            <li>✅ Con el número de NIT y la fecha de  nacimiento, podemos visualizar si la persona tiene agencia virtual de la SAT</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+      
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar"> RTU</span> actualizado?</h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://portal.sat.gob.gt/portal/consulta-registro-tributario-unificado/" target="_blank" class="cara-trasera">
+          <h4>Este sistema es para: </h4>
+          <ul>
+            <li>✅ Con el número de NIT y la fecha de  nacimiento, podemos visualizar si la persona tiene agencia virtual de la SAT</li>
+          </ul>
+          <span class="boton-enlace">Ingresar Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+     <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar"> Para buscar Facturas Electrónicas y proveedores</span> en el portal de la SAT</h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://portal.sat.gob.gt/portal/verificador-publico-de-dte/" target="_blank" class="cara-trasera">
+          <h4>Este sistema es: </h4>
+          <ul>
+            <li>✅ Es de mucha utilidad, cuando una factura nos da error o el proveedor esta inhabiltado en la SAT, con esta utilidad se determina el problema  y la solución</li>
+          </ul>
+          <span class="boton-enlace">Ingresar Portal ➔</span>
+        </a>
+      </div>
+    </div>
+  
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Consulta de Proveedores</span> en el Registro General de Adquisiciones del Estado <span class="resaltar"> RGAE</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://sistema.rgae.gob.gt/consulta-proveedores" target="_blank" class="cara-trasera">
+          <h4>Este sistema contiene: </h4>
+          <ul>
+            <li>📄 El registro de los proveedores:</li>
+            <li>✅ aqui se puede ver los catálogos de especialidad de los mismos; tambien estan los  datos de los representantes</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+     <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Catálogo de Especialidades</span> del Registro General de Adquisiciones del Estado <span class="resaltar"> RGAE</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://rgae.gob.gt/wp-content/uploads/2020/03/segunda-edicin-del-catlogo-de-especialidades-del-rgae.pdf" target="_blank" class="cara-trasera">
+          <h4>Este sistema contiene: </h4>
+          <ul>
+            <li>📄 El listado de especialidades que pueden tener los proveedores:</li>
+            <li>✅ aqui se puede ver el listado que podrían tener los proveedore,incluso  pueden tener más de uno</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Inventario de Cuentas</span> de SICOIN </h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://sicoin.minfin.gob.gt/sicoinweb/Consultas/C00820674.aspx" target="_blank" class="cara-trasera">
+          <h4>Este sistema contiene: </h4>
+          <ul>
+            <li>✅ El dato de la cuenta  bancaría que tiene un proveedor en los bancos del sistema</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+<div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Portal CGC</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://appweb.contraloria.gob.gt/PortalCGC/ng/#/Home/Main" target="_blank" class="cara-trasera">
+          <h4>Este sistema contiene: </h4>
+          <ul>
+            <li>✅ Es para ingresar Portal de la Contraloría General de Cuentas,para ingresar al usuario consultar datos o crear/finalizar bitacoras</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+<div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Task</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://tasks.google.com/tasks/" target="_blank" class="cara-trasera">
+          <h4>Este sistema contiene: </h4>
+          <ul>
+            <li>✅ Es para ingresar a las tareas se tienen en el Task de google y dar seguimiento</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+<div class="tarjeta-3d">
+      <div class="tarjeta-interior">
+        <div class="cara-frontal">
+          <h3><span class="resaltar">Chat de whatsapp</span></h3>
+          <img src="icono1.svg" alt="Icono">
+        </div>
+        <a href="https://web.whatsapp.com/" target="_blank" class="cara-trasera">
+          <h4>Esto es para: </h4>
+          <ul>
+            <li>✅ Ingresar al chat de la web</li>
+          </ul>
+          <span class="boton-enlace">Ingresar al Portal ➔</span>
+        </a>
+      </div>
+    </div>
+
+    </div>
+
+  <!--Esto es de javascrip para darle la bienvenida-->
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const banner = document.getElementById("welcome-banner");
+    const closeBtn = document.getElementById("close-banner-btn");
+
+    // Comprobamos si el usuario ya vio la bienvenida en esta sesión
+    if (!sessionStorage.getItem("welcomeShown")) {
+      banner.classList.remove("hidden"); // Se muestra el banner si es su primera vez
+    }
+
+    // Al hacer clic en el botón de bienvenida
+    closeBtn.addEventListener("click", () => {
+      banner.classList.add("hidden"); // Ocultamos el banner
+      sessionStorage.setItem("welcomeShown", "true"); // Guardamos que ya lo vio
+    });
+  });
+</script>
+
+
+</body>
+</html>
